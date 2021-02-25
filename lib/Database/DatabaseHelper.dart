@@ -18,17 +18,15 @@ class DatabaseQuery {
   initDB() async {
     return openDatabase(join(await getDatabasesPath(), "TestDB.db"), version: 1,
         onCreate: (Database db, int version) async {
-          await db.execute("CREATE TABLE Number ("
-              "text1 int,"
-              "text2 int,"
-              "text3 int,"
-              "comment TEXT"
-              "date TEXT PRIMARY KEY,"
-              ")");
-
-        });
+      await db.execute("CREATE TABLE Number ("
+          "text1 int,"
+          "text2 int,"
+          "text3 int,"
+          "comment TEXT"
+          "date TEXT PRIMARY KEY"
+          ")");
+    });
   }
-
 
   newNumber(Number newClient) async {
     final db = await database;
@@ -44,7 +42,7 @@ class DatabaseQuery {
     final db = await database;
     var res = await db.query("Number");
     List<Number> list =
-    res.isNotEmpty ? res.map((c) => Number.fromMap(c)).toList() : [];
+        res.isNotEmpty ? res.map((c) => Number.fromMap(c)).toList() : [];
     return list;
   }
 
@@ -73,5 +71,4 @@ class DatabaseQuery {
     final db = await database;
     db.rawDelete("Delete * from Number");
   }
-
 }

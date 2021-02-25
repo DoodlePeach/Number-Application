@@ -39,7 +39,7 @@ class _HistoryPageState extends State<HistoryPage> {
                 SizedBox(
                   width: 50,
                 ),
-                Expanded(child: Text(pressedNumber.time))
+                Expanded(child: Text(pressedNumber.date))
               ],
             ),
             TextField(
@@ -144,7 +144,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                 .then((value) {
                               Provider.of<NumberListModel>(context,
                                       listen: false)
-                                  .fetch();
+                                  .refresh();
                             });
                           }),
                     ),

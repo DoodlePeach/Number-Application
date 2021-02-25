@@ -1,3 +1,4 @@
+import 'package:NumberApp/Database/DataBaseHelper.dart';
 import 'package:NumberApp/models/Number.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -29,9 +30,7 @@ class NumberInputModel extends ChangeNotifier {
     }
 
     // Call async insert function for database here.
-
-    print(
-        "[INSERT] Input number was ${input.text1}, ${input.text2} and ${input.text3}");
+    return DatabaseQuery.db.newNumber(input);
   }
 
   Future<void> update(Number number) async {
@@ -48,7 +47,6 @@ class NumberInputModel extends ChangeNotifier {
     }
 
     // Call async update function for database here.
-
-    print("[UPDATE] in input model called");
+    return DatabaseQuery.db.updateNumber(input, false);
   }
 }

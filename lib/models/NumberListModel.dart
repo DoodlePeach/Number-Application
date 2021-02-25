@@ -14,24 +14,14 @@ class NumberListModel extends ChangeNotifier {
     refresh();
   }
 
-  void refresh() {
+  Future<void> refresh() async {
     DatabaseQuery.db.getAllNumber().then((List<Number> value) async {
       _numbers = value;
       notifyListeners();
     });
   }
 
-  void insert(Number item) {
-    DatabaseQuery.db.newNumber(item);
-    refresh();
-  }
-
-  void update(Number item) {
-    DatabaseQuery.db.updateNumber(item, false);
-    refresh();
-  }
-
-  void delete(Number item) {
+  Future<void> delete(Number item) async {
     DatabaseQuery.db.deleteNumber(item);
     refresh();
   }
