@@ -6,13 +6,28 @@ import 'package:flutter/cupertino.dart';
 // Updating the fields there updates Number here accordingly.
 // Clicking the save button there runs the insert function here.
 class NumberInputModel extends ChangeNotifier {
-  Number _data = new Number(text1: 0, text2: 0, text3: 0);
+  // Controllers for getting text from the fields and listening to changes in Number
+  // history page.
+  final TextEditingController text1 = new TextEditingController(),
+      text2 = new TextEditingController(),
+      text3 = new TextEditingController();
 
-  Future<void> insert() {}
+  Future<void> insert() {
+    Number input;
+
+    try {
+      input = new Number(
+          text1: int.parse(text1.text),
+          text2: int.parse(text2.text),
+          text3: int.parse(text3.text));
+    } catch (e) {
+      print(e.toString());
+    }
+
+    print("Input number was ${input.text1}, ${input.text2} and ${input.text3}");
+  }
 
   void update(Number number) {
-    _data = number;
-
     notifyListeners();
   }
 }
