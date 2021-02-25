@@ -2,11 +2,21 @@ import 'package:NumberApp/models/NumberListModel.dart';
 import 'package:NumberApp/screens/chart.dart';
 import 'package:NumberApp/screens/history.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import 'models/NumberInputModel.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  var status = await Permission.storage.status;
+  if (status.isUndetermined) {
+    // You can request multiple permissions at once.
+    Map<Permission, PermissionStatus> statuses = await [Permission.storage].request();
+    print(statuses[Permission.storage]); // it should print PermissionStatus.granted
+  }
+
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
       create: (context) => NumberListModel(),

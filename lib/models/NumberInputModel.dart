@@ -17,9 +17,12 @@ class NumberInputModel extends ChangeNotifier {
 
     try {
       input = new Number(
-          text1: int.parse(text1.text),
-          text2: int.parse(text2.text),
-          text3: int.parse(text3.text));
+          int.parse(text1.text),
+          int.parse(text2.text),
+          int.parse(text3.text),
+          "",
+          "");
+
     } catch (e) {
       print(e.toString());
     }
