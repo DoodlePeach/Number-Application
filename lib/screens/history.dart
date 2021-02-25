@@ -122,6 +122,7 @@ class _HistoryPageState extends State<HistoryPage> {
                         onPressed: () {
                           Provider.of<NumberListModel>(context, listen: false)
                               .delete(pressedNumber);
+                          Navigator.of(context).pop();
                         },
                       ),
                     ),
@@ -193,7 +194,11 @@ class _HistoryPageState extends State<HistoryPage> {
                 onPressed: () {
                   print("Save pressed");
                   Provider.of<NumberInputModel>(context, listen: false)
-                      .insert();
+                      .insert()
+                      .then((value) {
+                    Provider.of<NumberListModel>(context, listen: false)
+                        .refresh();
+                  });
                 },
               )
             ],
