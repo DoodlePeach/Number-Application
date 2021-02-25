@@ -22,7 +22,7 @@ class DatabaseQuery {
           "text1 int,"
           "text2 int,"
           "text3 int,"
-          "comment TEXT"
+          "comment TEXT,"
           "date TEXT PRIMARY KEY"
           ")");
     });
