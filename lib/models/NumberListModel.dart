@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 // in the home page.
 class NumberListModel extends ChangeNotifier {
   List<Number> _numbers = [];
+
   UnmodifiableListView<Number> get numbers => UnmodifiableListView(_numbers);
 
   NumberListModel() {

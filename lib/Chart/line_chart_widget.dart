@@ -25,7 +25,7 @@ class LineChartWidget extends StatelessWidget {
       minX: 0,
       maxX: 11,
       minY: 0,
-      maxY: 6,
+      maxY: 11,
       titlesData: LineTitles.getTitleData(xValues,yValues),
       gridData: FlGridData(
         show: true,
