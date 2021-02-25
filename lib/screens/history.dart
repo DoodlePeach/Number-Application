@@ -205,7 +205,7 @@ class _HistoryPageState extends State<HistoryPage> {
                   itemCount: data.numbers.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      title: Text(data.numbers[index].time),
+                      title: Text(data.numbers[index].date),
                       trailing: IconButton(
                           icon: Icon(Icons.delete),
                           onPressed: () {

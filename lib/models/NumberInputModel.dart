@@ -22,7 +22,8 @@ class NumberInputModel extends ChangeNotifier {
           text1: int.parse(text1.text),
           text2: int.parse(text2.text),
           text3: int.parse(text3.text),
-          time: "${currentTime.day}/${currentTime.month}/${currentTime.year}");
+          date: "${currentTime.day}/${currentTime.month}/${currentTime.year}",
+          comment: "");
     } catch (e) {
       print(e.toString());
     }
