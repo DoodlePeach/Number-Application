@@ -10,7 +10,18 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-  Widget dialogBox(BuildContext context) {
+  // This function returns the dialog box that is shown to the user when
+  // they click an item on the listview present on the homepage.
+  // @arg pressedNumber represents record which the user clicked. This is used
+  // to identify the record in the database.
+  Widget dialogBox(BuildContext context, Number pressedNumber) {
+    Provider.of<NumberInputModel>(context, listen: false).text1.text =
+        pressedNumber.text1.toString();
+    Provider.of<NumberInputModel>(context, listen: false).text2.text =
+        pressedNumber.text2.toString();
+    Provider.of<NumberInputModel>(context, listen: false).text3.text =
+        pressedNumber.text3.toString();
+
     return Dialog(
       child: Container(
         padding: EdgeInsets.all(10),
@@ -28,13 +39,15 @@ class _HistoryPageState extends State<HistoryPage> {
                 SizedBox(
                   width: 50,
                 ),
-                Expanded(child: TextField())
+                Expanded(child: Text(pressedNumber.time))
               ],
             ),
             TextField(
-              decoration: const InputDecoration(
-                  labelText: 'Comments', labelStyle: TextStyle(fontSize: 15)),
-            ),
+                decoration: const InputDecoration(
+                    labelText: 'Comments', labelStyle: TextStyle(fontSize: 15)),
+                controller:
+                    Provider.of<NumberInputModel>(context, listen: false)
+                        .comment),
             SizedBox(
               height: 30,
             ),
@@ -53,7 +66,12 @@ class _HistoryPageState extends State<HistoryPage> {
                 SizedBox(
                   width: 50,
                 ),
-                Expanded(child: TextField())
+                Expanded(
+                    child: TextField(
+                  controller:
+                      Provider.of<NumberInputModel>(context, listen: false)
+                          .text1,
+                ))
               ],
             ),
             Row(
@@ -66,7 +84,12 @@ class _HistoryPageState extends State<HistoryPage> {
                 SizedBox(
                   width: 50,
                 ),
-                Expanded(child: TextField())
+                Expanded(
+                    child: TextField(
+                  controller:
+                      Provider.of<NumberInputModel>(context, listen: false)
+                          .text2,
+                ))
               ],
             ),
             Row(
@@ -79,31 +102,52 @@ class _HistoryPageState extends State<HistoryPage> {
                 SizedBox(
                   width: 50,
                 ),
-                Expanded(child: Container(child: TextField()))
+                Expanded(
+                    child: Container(
+                        child: TextField(
+                  controller:
+                      Provider.of<NumberInputModel>(context, listen: false)
+                          .text3,
+                )))
               ],
             ),
             Expanded(
               child: Container(
                 alignment: Alignment.bottomCenter,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () {
-                        print("Pressed delete button");
-                      },
+                    Expanded(
+                      child: IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () {
+                          Provider.of<NumberListModel>(context, listen: false)
+                              .delete(pressedNumber);
+                        },
+                      ),
                     ),
-                    FlatButton(
-                        child: Text("Cancel"),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        }),
-                    FlatButton(
-                        child: Text("Edit"),
-                        onPressed: () {
-                          print("Pressed edit button");
-                        }),
+                    Expanded(
+                      child: FlatButton(
+                          child: Text("Cancel"),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          }),
+                    ),
+                    Expanded(
+                      child: FlatButton(
+                          child: Text("Edit"),
+                          onPressed: () {
+                            // Update the number, then refresh the list of numbers
+                            // to reflect the changes that occured.
+                            Provider.of<NumberInputModel>(context,
+                                    listen: false)
+                                .update(pressedNumber)
+                                .then((value) {
+                              Provider.of<NumberListModel>(context,
+                                      listen: false)
+                                  .fetch();
+                            });
+                          }),
+                    ),
                   ],
                 ),
               ),
@@ -121,45 +165,39 @@ class _HistoryPageState extends State<HistoryPage> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Expanded(
-            child: Consumer<NumberInputModel>(
-              builder: (ctxt, data, child) {
-                return Column(
-                  children: [
-                    TextField(
-                        decoration: const InputDecoration(
-                          labelText: 'Text1 *',
-                        ),
-                        controller: Provider.of<NumberInputModel>(context,
-                                listen: false)
-                            .text1),
-                    TextField(
-                      decoration: const InputDecoration(
-                        labelText: 'Text2 *',
-                      ),
-                      controller:
-                          Provider.of<NumberInputModel>(context, listen: false)
-                              .text2,
-                    ),
-                    TextField(
-                        decoration: const InputDecoration(
-                          labelText: 'Text3 *',
-                        ),
-                        controller: Provider.of<NumberInputModel>(context,
-                                listen: false)
-                            .text3),
-                    FlatButton(
-                      child: Text("Save"),
-                      onPressed: () {
-                        print("Save pressed");
-                        Provider.of<NumberInputModel>(context, listen: false)
-                            .insert();
-                      },
-                    )
-                  ],
-                );
-              },
-            ),
-          ),
+              child: Column(
+            children: [
+              TextField(
+                  decoration: const InputDecoration(
+                    labelText: 'Text1 *',
+                  ),
+                  controller:
+                      Provider.of<NumberInputModel>(context, listen: false)
+                          .text1),
+              TextField(
+                decoration: const InputDecoration(
+                  labelText: 'Text2 *',
+                ),
+                controller:
+                    Provider.of<NumberInputModel>(context, listen: false).text2,
+              ),
+              TextField(
+                  decoration: const InputDecoration(
+                    labelText: 'Text3 *',
+                  ),
+                  controller:
+                      Provider.of<NumberInputModel>(context, listen: false)
+                          .text3),
+              FlatButton(
+                child: Text("Save"),
+                onPressed: () {
+                  print("Save pressed");
+                  Provider.of<NumberInputModel>(context, listen: false)
+                      .insert();
+                },
+              )
+            ],
+          )),
           Expanded(
             child: Consumer<NumberListModel>(
               builder: (context, data, child) {
@@ -175,7 +213,9 @@ class _HistoryPageState extends State<HistoryPage> {
                                 .delete(data.numbers[index]);
                           }),
                       onTap: () {
-                        showDialog(context: context, child: dialogBox(context));
+                        showDialog(
+                            context: context,
+                            child: dialogBox(context, data.numbers[index]));
                       },
                     );
                   },

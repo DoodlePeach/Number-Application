@@ -12,7 +12,6 @@ class NumberListModel extends ChangeNotifier {
 
   UnmodifiableListView<Number> get numbers => UnmodifiableListView(_numbers);
 
-  Future<void> fetch() {}
-  Future<void> update() {}
-  Future<void> delete(Number number) {}
+  Future<void> fetch() async {}
+  Future<void> delete(Number number) async {}
 }

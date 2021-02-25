@@ -10,24 +10,44 @@ class NumberInputModel extends ChangeNotifier {
   // history page.
   final TextEditingController text1 = new TextEditingController(),
       text2 = new TextEditingController(),
-      text3 = new TextEditingController();
+      text3 = new TextEditingController(),
+      comment = new TextEditingController();
 
-  Future<void> insert() {
+  Future<void> insert() async {
+    Number input;
+    DateTime currentTime = DateTime.now();
+
+    try {
+      input = new Number(
+          text1: int.parse(text1.text),
+          text2: int.parse(text2.text),
+          text3: int.parse(text3.text),
+          time: "${currentTime.day}/${currentTime.month}/${currentTime.year}");
+    } catch (e) {
+      print(e.toString());
+    }
+
+    // Call async insert function for database here.
+
+    print(
+        "[INSERT] Input number was ${input.text1}, ${input.text2} and ${input.text3}");
+  }
+
+  Future<void> update(Number number) async {
     Number input;
 
     try {
       input = new Number(
           text1: int.parse(text1.text),
           text2: int.parse(text2.text),
-          text3: int.parse(text3.text));
+          text3: int.parse(text3.text),
+          comment: comment.text);
     } catch (e) {
       print(e.toString());
     }
 
-    print("Input number was ${input.text1}, ${input.text2} and ${input.text3}");
-  }
+    // Call async update function for database here.
 
-  void update(Number number) {
-    notifyListeners();
+    print("[UPDATE] in input model called");
   }
 }
