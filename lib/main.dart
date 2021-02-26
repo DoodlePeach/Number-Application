@@ -42,20 +42,32 @@ class MyApp extends StatelessWidget {
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
-          appBar: AppBar(
-            bottom: TabBar(
-              tabs: [
-                Tab(
-                  text: "Number History",
+          // Using a nested scroll view for Silvers, since SingleChildScrollView
+          // does not seem to work with TabBarView.
+          body: NestedScrollView(
+            scrollDirection: Axis.vertical,
+            headerSliverBuilder: (context, innerBoxIsScrolled) => [
+              SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text('Number Application'),
+                    ),
+                    TabBar(
+                      labelColor: Colors.blue,
+                      tabs: [
+                        Tab(text: 'Number History'),
+                        Tab(text: 'Chart'),
+                      ],
+                    ),
+                  ],
                 ),
-                Tab(
-                  text: "Chart",
-                ),
-              ],
+              ),
+            ],
+            body: TabBarView(
+              children: [HistoryPage(), ChartPage()],
             ),
-          ),
-          body: TabBarView(
-            children: [HistoryPage(), ChartPage()],
           ),
         ),
       ),

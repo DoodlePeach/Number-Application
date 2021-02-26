@@ -15,6 +15,8 @@ class _HistoryPageState extends State<HistoryPage> {
   // @arg pressedNumber represents record which the user clicked. This is used
   // to identify the record in the database.
   Widget dialogBox(BuildContext context, Number pressedNumber) {
+    // Set the text input contents of the dialog box to whatever was currently
+    // in the history page's textboxes.
     Provider.of<NumberInputModel>(context, listen: false).text1.text =
         pressedNumber.text1.toString();
     Provider.of<NumberInputModel>(context, listen: false).text2.text =
@@ -162,72 +164,105 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(10),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
-              child: Column(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextField(
-                  decoration: const InputDecoration(
-                    labelText: 'Text1 *',
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(),
                   ),
-                  controller:
-                      Provider.of<NumberInputModel>(context, listen: false)
-                          .text1),
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: 'Text2 *',
-                ),
-                controller:
-                    Provider.of<NumberInputModel>(context, listen: false).text2,
+                  Expanded(
+                    child: TextField(
+                        decoration: const InputDecoration(
+                          labelText: 'Text1 *',
+                        ),
+                        controller: Provider.of<NumberInputModel>(context,
+                                listen: false)
+                            .text1),
+                  ),
+                  Expanded(
+                    child: Container(),
+                  ),
+                ],
               ),
-              TextField(
-                  decoration: const InputDecoration(
-                    labelText: 'Text3 *',
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      decoration: const InputDecoration(
+                        labelText: 'Text2 *',
+                      ),
+                      controller:
+                          Provider.of<NumberInputModel>(context, listen: false)
+                              .text2,
+                    ),
                   ),
-                  controller:
-                      Provider.of<NumberInputModel>(context, listen: false)
-                          .text3),
-              FlatButton(
-                child: Text("Save"),
-                onPressed: () {
-                  print("Save pressed");
-                  Provider.of<NumberInputModel>(context, listen: false)
-                      .insert()
-                      .then((value) {
-                    Provider.of<NumberListModel>(context, listen: false)
-                        .refresh();
-                  });
-                },
+                  Expanded(child: Container()),
+                  Expanded(
+                    child: TextField(
+                        decoration: const InputDecoration(
+                          labelText: 'Text3 *',
+                        ),
+                        controller: Provider.of<NumberInputModel>(context,
+                                listen: false)
+                            .text3),
+                  ),
+                ],
+              ),
+              Center(
+                child: FlatButton(
+                  child: Text("Save"),
+                  onPressed: () {
+                    print("Save pressed");
+                    Provider.of<NumberInputModel>(context, listen: false)
+                        .insert()
+                        .then((value) {
+                      Provider.of<NumberListModel>(context, listen: false)
+                          .refresh();
+                    });
+                  },
+                ),
               )
             ],
-          )),
-          Expanded(
-            child: Consumer<NumberListModel>(
-              builder: (context, data, child) {
-                return ListView.builder(
-                  itemCount: data.numbers.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(data.numbers[index].date),
-                      trailing: IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            Provider.of<NumberListModel>(context, listen: false)
-                                .delete(data.numbers[index]);
-                          }),
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            child: dialogBox(context, data.numbers[index]));
-                      },
-                    );
-                  },
-                );
-              },
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 10),
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Number History",
+              textAlign: TextAlign.start,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
             ),
-          )
+          ),
+          Consumer<NumberListModel>(
+            builder: (context, data, child) {
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: data.numbers.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(data.numbers[index].date),
+                    trailing: IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () {
+                          Provider.of<NumberListModel>(context, listen: false)
+                              .delete(data.numbers[index]);
+                        }),
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          child: dialogBox(context, data.numbers[index]));
+                    },
+                  );
+                },
+              );
+            },
+          ),
         ],
       ),
     );
