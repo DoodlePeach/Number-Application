@@ -15,10 +15,11 @@ class LineTitles {
       ),
       getTitles: (value) {
         switch (value.toInt()) {
-          case 3:
+          case 2:
             return x[0];
-          case 6:
-            return x[1];
+          case 4:
+            if(x.length>1)
+              return x[1];
         }
         return '';
       },
@@ -35,11 +36,9 @@ class LineTitles {
         switch (value.toInt()) {
           case 0:
             return "0";
-          case 3:
-            return y[0];
-          case 6:
-            return y[1];
-
+          default:
+            if(value.toInt()==int.parse(y[0]) || value.toInt()==int.parse(y[1]) || value.toInt()==(int.parse(y[1])-10))
+              return value.toInt().toString();
         }
         return '';
       },

@@ -23,8 +23,8 @@ class DatabaseQuery {
           "text2 int,"
           "text3 int,"
           "comment TEXT,"
-          "date TEXT,"
-          "id INTEGER PRIMARY KEY"
+          "date TEXT PRIMARY KEY,"
+          "id INTEGER"
           ")");
     });
   }
@@ -51,7 +51,7 @@ class DatabaseQuery {
     final db = await database;
     try {
       var res = await db.update("Number", newClient.toMap(),
-          where: "id = ?", whereArgs: [newClient.id]);
+          where: "date = ?", whereArgs: [newClient.date]);
       if (toastOption) Fluttertoast.showToast(msg: "Updated Successfully");
     } on DatabaseException {
       Fluttertoast.showToast(msg: "Not Updated");
@@ -61,7 +61,7 @@ class DatabaseQuery {
   deleteNumber(Number item) async {
     final db = await database;
     try {
-      db.delete("Number", where: "id = ?", whereArgs: [item.id]);
+      db.delete("Number", where: "date = ?", whereArgs: [item.date]);
       Fluttertoast.showToast(msg: "Deleted Successfuly");
     } on DatabaseException {
       Fluttertoast.showToast(msg: "Not Deleted");
