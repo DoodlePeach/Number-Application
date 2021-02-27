@@ -23,7 +23,8 @@ class DatabaseQuery {
           "text2 int,"
           "text3 int,"
           "comment TEXT,"
-          "date TEXT PRIMARY KEY"
+          "date TEXT PRIMARY KEY,"
+          "id INTEGER"
           ")");
     });
   }
