@@ -23,98 +23,105 @@ class _HistoryPageState extends State<HistoryPage> {
         pressedNumber.text2.toString();
     Provider.of<NumberInputModel>(context, listen: false).text3.text =
         pressedNumber.text3.toString();
+    Provider.of<NumberInputModel>(context, listen: false).comment.text =
+        pressedNumber.comment.toString();
 
     return Dialog(
       child: Container(
         padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Edit text",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Data"),
-                SizedBox(
-                  width: 50,
-                ),
-                Expanded(child: Text(pressedNumber.date))
-              ],
-            ),
-            TextField(
-                decoration: const InputDecoration(
-                    labelText: 'Comments', labelStyle: TextStyle(fontSize: 15)),
-                controller:
-                    Provider.of<NumberInputModel>(context, listen: false)
-                        .comment),
-            SizedBox(
-              height: 30,
-            ),
-            Text(
-              "Text",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Text1",
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  width: 50,
-                ),
-                Expanded(
-                    child: TextField(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Edit text",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Data"),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Expanded(child: Text(pressedNumber.date))
+                ],
+              ),
+              TextField(
+                  maxLines: 3,
+                  decoration: const InputDecoration(
+                      labelText: 'Comments',
+                      labelStyle: TextStyle(fontSize: 15)),
                   controller:
                       Provider.of<NumberInputModel>(context, listen: false)
-                          .text1,
-                ))
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Text2",
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  width: 50,
-                ),
-                Expanded(
-                    child: TextField(
-                  controller:
-                      Provider.of<NumberInputModel>(context, listen: false)
-                          .text2,
-                ))
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Text3",
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  width: 50,
-                ),
-                Expanded(
-                    child: Container(
-                        child: TextField(
-                  controller:
-                      Provider.of<NumberInputModel>(context, listen: false)
-                          .text3,
-                )))
-              ],
-            ),
-            Expanded(
-              child: Container(
+                          .comment),
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                "Text",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Text1",
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Expanded(
+                      child: TextField(
+                    controller:
+                        Provider.of<NumberInputModel>(context, listen: false)
+                            .text1,
+                  ))
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Text2",
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Expanded(
+                      child: TextField(
+                    controller:
+                        Provider.of<NumberInputModel>(context, listen: false)
+                            .text2,
+                  ))
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Text3",
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Expanded(
+                      child: Container(
+                          child: TextField(
+                    controller:
+                        Provider.of<NumberInputModel>(context, listen: false)
+                            .text3,
+                  )))
+                ],
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Container(
                 alignment: Alignment.bottomCenter,
                 child: Row(
                   children: [
@@ -133,6 +140,15 @@ class _HistoryPageState extends State<HistoryPage> {
                           child: Text("Cancel"),
                           onPressed: () {
                             Navigator.of(context).pop();
+
+                            // Clear the comments controller. We dont want comments
+                            // put on a cancelled dialog option to be reflected in
+                            // any insertions after this ince insert and other
+                            // operations are using the same set of controllers..
+                            Provider.of<NumberInputModel>(context,
+                                    listen: false)
+                                .comment
+                                .text = "";
                           }),
                     ),
                     Expanded(
@@ -148,14 +164,25 @@ class _HistoryPageState extends State<HistoryPage> {
                               Provider.of<NumberListModel>(context,
                                       listen: false)
                                   .refresh();
+
+                              // Clear the comments controller. We dont want comments
+                              // put on a editted dialog option to be reflected in
+                              // any insertions after this since insert and other
+                              // operations are using the same set of controllers.
+                              Provider.of<NumberInputModel>(context,
+                                      listen: false)
+                                  .comment
+                                  .text = "";
+
+                              Navigator.of(context).pop();
                             });
                           }),
                     ),
                   ],
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -1,8 +1,6 @@
 import 'package:NumberApp/Database/DataBaseHelper.dart';
 import 'package:NumberApp/models/Number.dart';
-import 'package:NumberApp/models/NumberListModel.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 
 // This class represents the fields displayed to the user
 // in the home page.
@@ -22,12 +20,12 @@ class NumberInputModel extends ChangeNotifier {
 
     try {
       input = new Number(
-          text1: int.parse(text1.text),
-          text2: int.parse(text2.text),
-          text3: int.parse(text3.text),
-          date: "${currentTime.day}/${currentTime.month}/${currentTime.year}",
-          comment: "",
-          );
+        text1: int.parse(text1.text),
+        text2: int.parse(text2.text),
+        text3: int.parse(text3.text),
+        date: "${currentTime.day}/${currentTime.month}/${currentTime.year}",
+        comment: "",
+      );
     } catch (e) {
       print(e.toString());
     }
@@ -46,7 +44,7 @@ class NumberInputModel extends ChangeNotifier {
           text3: int.parse(text3.text),
           comment: comment.text,
           date: number.date,
-          id:number.id);
+          id: number.id);
     } catch (e) {
       print(e.toString());
     }

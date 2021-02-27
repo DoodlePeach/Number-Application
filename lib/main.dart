@@ -1,3 +1,4 @@
+import 'package:NumberApp/models/ChartModel.dart';
 import 'package:NumberApp/models/NumberListModel.dart';
 import 'package:NumberApp/screens/chart.dart';
 import 'package:NumberApp/screens/history.dart';
@@ -25,6 +26,9 @@ Future<void> main() async {
     ),
     ChangeNotifierProvider(
       create: (context) => NumberInputModel(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => ChartModel(context: context),
     ),
   ], child: MyApp()));
 }
