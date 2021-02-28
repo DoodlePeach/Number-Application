@@ -15,6 +15,13 @@ class ChartPage extends StatelessWidget {
           builder: (context, data, child) {
             return Column(
               children: [
+                Container(
+                  child: Text(
+                    data.selected,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  ),
+                  padding: EdgeInsets.all(5),
+                ),
                 data.chart,
                 FlatButton(
                   child: Text("Text1"),

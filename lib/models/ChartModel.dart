@@ -10,6 +10,8 @@ import 'Number.dart';
 class ChartModel extends ChangeNotifier {
   final BuildContext _context;
   Widget chart = Container();
+  String selected = "Text1";
+  String date = "";
 
   ChartModel({context}) : _context = context {
     generateGraph(1);
@@ -77,6 +79,8 @@ class ChartModel extends ChangeNotifier {
       yVal.add("0");
       yVal.add("0");
     }
+
+    selected = "Text" + textNumber.toString();
 
     chart = LineChartWidget(spotList: spotList, xValues: xVal, yValues: yVal);
     notifyListeners();
