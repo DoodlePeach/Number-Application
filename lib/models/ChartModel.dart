@@ -2,17 +2,14 @@ import 'package:NumberApp/Chart/line_chart_widget.dart';
 import 'package:NumberApp/models/NumberListModel.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'Number.dart';
 
 class ChartModel extends ChangeNotifier {
   final BuildContext _context;
-  Widget chart = Container(
-    child: Center(
-      child: Text("No data"),
-    ),
-  );
+  Widget chart = Container();
 
   ChartModel({context}) : _context = context {
     generateGraph(1);
@@ -55,20 +52,31 @@ class ChartModel extends ChangeNotifier {
           yVal.add((t1 + 10).toString());
         }
       } else {
-        if (textNumber == 1)
+        if (textNumber == 1) {
           spotList.add(new FlSpot(2, num[0].text1.toDouble()));
-        else if (textNumber == 2)
+          xVal.add(num[0].date);
+          yVal.add((num[0].text1 + 10).toString());
+          yVal.add("0");
+        } else if (textNumber == 2) {
           spotList.add(new FlSpot(2, num[0].text2.toDouble()));
-        else
+
+          xVal.add(num[0].date);
+          yVal.add((num[0].text2 + 10).toString());
+          yVal.add("0");
+        } else {
           spotList.add(new FlSpot(2, num[0].text3.toDouble()));
 
-        xVal.add(num[0].date);
-        yVal.add((num[0].text1 + 10).toString());
-        yVal.add("0");
+          xVal.add(num[0].date);
+          yVal.add((num[0].text3 + 10).toString());
+          yVal.add("0");
+        }
       }
+    } else {
+      spotList.add(FlSpot(0, 0));
+      xVal.add("No records");
+      yVal.add("0");
+      yVal.add("0");
     }
-
-    if (spotList.isEmpty || xVal.isEmpty || yVal.isEmpty) return;
 
     chart = LineChartWidget(spotList: spotList, xValues: xVal, yValues: yVal);
     notifyListeners();
