@@ -8,7 +8,11 @@ import 'Number.dart';
 
 class ChartModel extends ChangeNotifier {
   final BuildContext _context;
-  Widget chart = Container();
+  Widget chart = Container(
+    child: Center(
+      child: Text("No data"),
+    ),
+  );
 
   ChartModel({context}) : _context = context {
     generateGraph(1);
@@ -63,6 +67,8 @@ class ChartModel extends ChangeNotifier {
         yVal.add("0");
       }
     }
+
+    if (spotList.isEmpty || xVal.isEmpty || yVal.isEmpty) return;
 
     chart = LineChartWidget(spotList: spotList, xValues: xVal, yValues: yVal);
     notifyListeners();

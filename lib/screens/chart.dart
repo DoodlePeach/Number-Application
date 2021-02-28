@@ -5,6 +5,10 @@ import 'package:provider/provider.dart';
 class ChartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Default option selected is Text1 when the page is generated
+    // for the first time.
+    Provider.of<ChartModel>(context, listen: false).generateGraph(1);
+
     return Container(
         padding: EdgeInsets.all(20),
         child: Consumer<ChartModel>(
