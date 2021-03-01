@@ -30,14 +30,20 @@ class ChartModel extends ChangeNotifier {
       int t1, t2;
       if (num.length > 1) {
         if (textNumber == 1) {
-          t1 = num[num.length - 2].text1;
-          t2 = num[num.length - 1].text1;
+          t1 =
+              num[num.length - 2].text1 == null ? 0 : num[num.length - 2].text1;
+          t2 =
+              num[num.length - 1].text1 == null ? 0 : num[num.length - 1].text1;
         } else if (textNumber == 2) {
-          t1 = num[num.length - 2].text2;
-          t2 = num[num.length - 1].text2;
+          t1 =
+              num[num.length - 2].text2 == null ? 0 : num[num.length - 2].text2;
+          t2 =
+              num[num.length - 1].text2 == null ? 0 : num[num.length - 1].text2;
         } else {
-          t1 = num[num.length - 2].text3;
-          t2 = num[num.length - 1].text3;
+          t1 =
+              num[num.length - 2].text3 == null ? 0 : num[num.length - 2].text3;
+          t2 =
+              num[num.length - 1].text3 == null ? 0 : num[num.length - 1].text3;
         }
 
         spotList.add(FlSpot(2, t1.toDouble()));
@@ -55,21 +61,27 @@ class ChartModel extends ChangeNotifier {
         }
       } else {
         if (textNumber == 1) {
-          spotList.add(new FlSpot(2, num[0].text1.toDouble()));
+          double spotValue = num[0].text1 == null ? 0 : num[0].text1.toDouble();
+
+          spotList.add(new FlSpot(2, spotValue));
           xVal.add(num[0].date);
-          yVal.add((num[0].text1 + 10).toString());
+          yVal.add((spotValue + 10).toString());
           yVal.add("0");
         } else if (textNumber == 2) {
-          spotList.add(new FlSpot(2, num[0].text2.toDouble()));
+          double spotValue = num[0].text2 == null ? 0 : num[0].text2.toDouble();
+
+          spotList.add(new FlSpot(2, spotValue));
 
           xVal.add(num[0].date);
-          yVal.add((num[0].text2 + 10).toString());
+          yVal.add((spotValue + 10).toString());
           yVal.add("0");
         } else {
-          spotList.add(new FlSpot(2, num[0].text3.toDouble()));
+          double spotValue = num[0].text3 == null ? 0 : num[0].text3.toDouble();
+
+          spotList.add(new FlSpot(2, spotValue));
 
           xVal.add(num[0].date);
-          yVal.add((num[0].text3 + 10).toString());
+          yVal.add((spotValue + 10).toString());
           yVal.add("0");
         }
       }

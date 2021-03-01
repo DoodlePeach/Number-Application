@@ -16,7 +16,7 @@ class NumberListModel extends ChangeNotifier {
   }
 
   Future<void> refresh() async {
-    DatabaseQuery.db.getAllNumber().then((List<Number> value) async {
+    return DatabaseQuery.db.getAllNumber().then((List<Number> value) async {
       _numbers = value;
       notifyListeners();
     });

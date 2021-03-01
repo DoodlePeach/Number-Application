@@ -16,13 +16,16 @@ class NumberInputModel extends ChangeNotifier {
 
   Future<void> insert() async {
     Number input;
+    // Get the time of insrtion for obtaining the date.
     DateTime currentTime = DateTime.now();
 
+    // Get the data from the model. If any of the texts are empty, then insert
+    // null values
     try {
       input = new Number(
-        text1: int.parse(text1.text),
-        text2: int.parse(text2.text),
-        text3: int.parse(text3.text),
+        text1: text1.text.isNotEmpty ? int.parse(text1.text) : null,
+        text2: text2.text.isNotEmpty ? int.parse(text2.text) : null,
+        text3: text3.text.isNotEmpty ? int.parse(text3.text) : null,
         date: "${currentTime.day}/${currentTime.month}/${currentTime.year}",
         comment: "",
       );
@@ -37,11 +40,13 @@ class NumberInputModel extends ChangeNotifier {
   Future<void> update(Number number) async {
     Number input;
 
+    // Get the data from the model. If any of the texts are empty, then insert
+    // null values
     try {
       input = new Number(
-          text1: int.parse(text1.text),
-          text2: int.parse(text2.text),
-          text3: int.parse(text3.text),
+          text1: text1.text.isNotEmpty ? int.parse(text1.text) : null,
+          text2: text2.text.isNotEmpty ? int.parse(text2.text) : null,
+          text3: text3.text.isNotEmpty ? int.parse(text3.text) : null,
           comment: comment.text,
           date: number.date,
           id: number.id);

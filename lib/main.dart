@@ -13,13 +13,14 @@ Future<void> main() async {
 
   var status = await Permission.storage.status;
   if (status.isUndetermined) {
-    // You can request multiple permissions at once.
+    // Need to get read/write permission for SQLite to work.
     Map<Permission, PermissionStatus> statuses =
         await [Permission.storage].request();
     print(statuses[
         Permission.storage]); // it should print PermissionStatus.granted
   }
 
+  // The providers on top of the app's tree for state management.
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
       create: (context) => NumberListModel(),
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      // Tab controller, for displating tabs in the application.
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
