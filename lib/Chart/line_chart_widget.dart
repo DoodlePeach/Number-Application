@@ -7,6 +7,7 @@ class LineChartWidget extends StatelessWidget {
   final List<FlSpot> spotList;
   final List<String> xValues, yValues;
 
+  // Setting Color schemes for chart
   final List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
@@ -17,12 +18,14 @@ class LineChartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => LineChart(
         LineChartData(
+          // Setting minimum,maximum values can be placed on x and y axis.
           minX: 0,
           maxX: 5,
           minY: 0,
           maxY: yValues[1] == "0"
               ? double.parse(yValues[0])
               : double.parse(yValues[1]),
+          //Placing x and y axis values
           titlesData: LineTitles.getTitleData(xValues, yValues),
           gridData: FlGridData(
             show: true,

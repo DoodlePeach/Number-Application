@@ -15,6 +15,7 @@ class LineTitles {
             fontSize: 16,
           ),
           getTitles: (value) {
+            // Placing dates on x-axis
             switch (value.toInt()) {
               case 2:
                 return x[0];
@@ -34,17 +35,7 @@ class LineTitles {
           ),
           interval: null,
           getTitles: (value) {
-            // if (value.toInt() == 0) {
-            //   return "0";
-            // } else if (value.toInt() / 2 == 0) {
-            //   return value.toInt().toString();
-            // } else {
-            //   if (value.toInt() == int.parse(y[0]) ||
-            //       value.toInt() == int.parse(y[1]) ||
-            //       value.toInt() == (int.parse(y[1]) - 10))
-            //     return value.toInt().toString();
-            // }
-
+            //Placing values on Y-axis
             return value.toInt().toString();
           },
           reservedSize: 35,

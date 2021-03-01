@@ -8,6 +8,7 @@ class Number {
   Number(
       {this.text1, this.text2, this.text3, this.comment, this.date, this.id});
 
+  // Conversion from json to number object
   factory Number.fromMap(Map<String, dynamic> json) => new Number(
       text1: json["text1"],
       text2: json["text2"],
@@ -16,6 +17,7 @@ class Number {
       date: json["date"],
       id: json["id"]);
 
+  // Mapping Number for database.
   Map<String, dynamic> toMap() => {
         "text1": text1,
         "text2": text2,

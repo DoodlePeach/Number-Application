@@ -11,6 +11,7 @@ import 'models/NumberInputModel.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Get storage permission from user
   var status = await Permission.storage.status;
   if (status.isUndetermined) {
     // Need to get read/write permission for SQLite to work.
