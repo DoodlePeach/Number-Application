@@ -7,12 +7,20 @@ import 'package:provider/provider.dart';
 
 import 'Number.dart';
 
+// This class represents the operations and data associated with
+// the chart displayed to the user in the chart page.
 class ChartModel extends ChangeNotifier {
+  // Build context is required to create the chart, so it is obtained at the
+  // top of the widget tree.
   final BuildContext _context;
-  Widget chart = Container();
-  String selected = "Text1";
-  String date = "";
 
+  // The current chart that is displayed to the user.
+  Widget chart = Container();
+
+  // The currently displayed attribute which is being displayed to the user.
+  String selected = "Text1";
+
+  // The default graph is for text1 attribute.
   ChartModel({context}) : _context = context {
     generateGraph(1);
   }
@@ -92,9 +100,12 @@ class ChartModel extends ChangeNotifier {
       yVal.add("0");
     }
 
+    // Change the title to whatever attribute is being displayed.
     selected = "Text" + textNumber.toString();
 
     chart = LineChartWidget(spotList: spotList, xValues: xVal, yValues: yVal);
+
+    // Finally, update the child widgets of listeners.
     notifyListeners();
   }
 }
